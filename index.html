@@ -74,6 +74,35 @@
         };
       }
       */
+      let isautoplaying = false;
+      let intervalID;
+      function autoplay(){
+        if(!isautoplaying){
+          intervalID = setInterval(function(){
+          const playerMove = pickComputerMove();
+          playGame(playerMove);
+        },1000);
+        isautoplaying = true;
+        }
+        else{
+          clearInterval(intervalID);
+          isautoplaying = false;
+        }
+       
+      }
+
+      function change(){
+       const btnElem = document.querySelector('.js-autoplay');
+        if(btnElem.innerHTML === 'Autoplay'){
+            btnElem.innerHTML = 'Stop Autoplay';
+            // btnElem.classList.add('is-autoplaying');
+            
+        }
+        else{
+            btnElem.innerHTML = 'Autoplay';
+            // btnElem.classList.remove('is-autoplaying');
+        }
+       }
 
       function playGame(playerMove) {
         const computerMove = pickComputerMove();
@@ -122,8 +151,8 @@
 
         document.querySelector('.result').innerHTML = result;
 
-        document.querySelector('.moves').innerHTML = ` You chose <img src="images/${playerMove}-emoji.png" alt="" class="resize"> - 
-      Computer chose <img src="images/${computerMove}-emoji.png" alt="" class="resize">`
+        document.querySelector('.moves').innerHTML = ` You <img src="images/${playerMove}-emoji.png" alt="" class="resize"> - 
+      Computer <img src="images/${computerMove}-emoji.png" alt="" class="resize">`
       }
 
       function updateScoreElement() {
@@ -156,6 +185,10 @@
       localStorage.removeItem('score');
       updateScoreElement();
     ">Reset Score</button>
+    <button class="reset js-autoplay" onclick="
+        autoplay();
+        change();
+    ">Autoplay</button>
 
   </body>
 </html>
